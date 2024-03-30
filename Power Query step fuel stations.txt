@@ -1,0 +1,89 @@
+= Table.TransformColumnTypes(#"Promoted Headers",{{"Fuel Type Code", type text}, {"Station Name", type text}, {"Street Address", type text}, {"Intersection Directions", type text}, {"City", type text}, {"State", type text}, {"ZIP", Int64.Type}, {"Plus4", type text}, {"Station Phone", type text}, {"Status Code", type text}, {"Expected Date", type text}, {"Groups With Access Code", type text}, {"Access Days Time", type text}, {"Cards Accepted", type text}, {"BD Blends", type text}, {"NG Fill Type Code", type text}, {"NG PSI", type text}, {"EV Level1 EVSE Num", Int64.Type}, {"EV Level2 EVSE Num", Int64.Type}, {"EV DC Fast Count", Int64.Type}, {"EV Other Info", type text}, {"EV Network", type text}, {"EV Network Web", type text}, {"Geocode Status", type text}, {"Latitude", type number}, {"Longitude", type number}, {"Date Last Confirmed", type date}, {"ID", Int64.Type}, {"Updated At", type text}, {"Owner Type Code", type text}, {"Federal Agency ID", type text}, {"Federal Agency Name", type text}, {"Open Date", type date}, {"Hydrogen Status Link", type text}, {"NG Vehicle Class", type text}, {"LPG Primary", type text}, {"E85 Blender Pump", type text}, {"EV Connector Types", type text}, {"Country", type text}, {"Intersection Directions (French)", type text}, {"Access Days Time (French)", type text}, {"BD Blends (French)", type text}, {"Groups With Access Code (French)", type text}, {"Hydrogen Is Retail", type text}, {"Access Code", type text}, {"Access Detail Code", type text}, {"Federal Agency Code", type text}, {"Facility Type", type text}, {"CNG Dispenser Num", type text}, {"CNG On-Site Renewable Source", type text}, {"CNG Total Compression Capacity", type text}, {"CNG Storage Capacity", type text}, {"LNG On-Site Renewable Source", type text}, {"E85 Other Ethanol Blends", type text}, {"EV Pricing", type text}, {"EV Pricing (French)", type text}, {"LPG Nozzle Types", type text}, {"Hydrogen Pressures", type text}, {"Hydrogen Standards", type text}, {"CNG Fill Type Code", type text}, {"CNG PSI", type text}, {"CNG Vehicle Class", type text}, {"LNG Vehicle Class", type text}, {"EV On-Site Renewable Source", type text}, {"Restricted Access", type logical}, {"RD Blends", type text}, {"RD Blends (French)", type text}, {"RD Blended with Biodiesel", type text}, {"RD Maximum Biodiesel Level", type text}, {"NPS Unit Name", type text}, {"CNG Station Sells Renewable Natural Gas", type text}, {"LNG Station Sells Renewable Natural Gas", type text}, {"Maximum Vehicle Class", type text}, {"EV Workplace Charging", type logical}})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+= Table.RemoveColumns(#"Changed Type",{"Fuel Type Code", "Station Name", "Intersection Directions"})
+
+
+
+
+= Table.SelectRows(#"Removed Columns", each ([State] <> "" and [State] <> "1950" and [State] <> "19720" and [State] <> "800-663-5633" and [State] <> "85743" and [State] <> "888-998-2546"))
+
+
+
+= Table.TransformColumnTypes(#"Filtered Rows",{{"ZIP", type text}})
+
+
+
+= Table.RemoveColumns(#"Changed Type1",{"Plus4", "Station Phone", "Status Code", "Expected Date", "Cards Accepted", "BD Blends", "NG Fill Type Code", "NG PSI", "Geocode Status", "ID", "Date Last Confirmed", "Updated At", "Federal Agency ID", "Federal Agency Name", "Hydrogen Status Link", "NG Vehicle Class", "LPG Primary", "E85 Blender Pump", "Intersection Directions (French)", "Access Days Time (French)", "BD Blends (French)", "Groups With Access Code (French)", "Hydrogen Is Retail", "Access Code", "Access Detail Code", "CNG Dispenser Num", "CNG On-Site Renewable Source", "CNG Total Compression Capacity", "CNG Storage Capacity", "LNG On-Site Renewable Source", "E85 Other Ethanol Blends", "EV Pricing (French)", "LPG Nozzle Types", "Hydrogen Pressures", "Hydrogen Standards", "CNG Fill Type Code", "CNG PSI", "CNG Vehicle Class", "LNG Vehicle Class", "RD Blends", "RD Blends (French)", "RD Blended with Biodiesel", "RD Maximum Biodiesel Level", "NPS Unit Name", "CNG Station Sells Renewable Natural Gas", "LNG Station Sells Renewable Natural Gas", "EV Network Web", "Groups With Access Code"})
+
+
+
+
+= Table.ReplaceValue(#"Removed Columns1","","LD",Replacer.ReplaceValue,{"Maximum Vehicle Class"})
+
+
+
+= Table.ReplaceValue(#"Replaced Value",null,false,Replacer.ReplaceValue,{"Restricted Access"})
+
+
+
+= Table.ReplaceValue(#"Replaced Value1","","None",Replacer.ReplaceValue,{"EV On-Site Renewable Source"})
+
+
+
+= Table.ReplaceValue(#"Replaced Value2","","Free",Replacer.ReplaceValue,{"EV Pricing"})
+
+
+= Table.ReplaceValue(#"Replaced Value3","","OTHER",Replacer.ReplaceValue,{"Facility Type"})
+
+
+= Table.ReplaceValue(#"Replaced Value4","","DOT",Replacer.ReplaceValue,{"Federal Agency Code"})
+
+
+= Table.ReplaceValue(#"Replaced Value5","","J1772 TESLA",Replacer.ReplaceValue,{"EV Connector Types"})
+
+
+= Table.ReplaceValue(#"Replaced Value6","","P",Replacer.ReplaceValue,{"Owner Type Code"})
+
+
+= Table.ReplaceValue(#"Replaced Value7","","1 LP Inductive",Replacer.ReplaceValue,{"EV Other Info"})
+
+
+= Table.ReplaceValue(#"Replaced Value8",null,0,Replacer.ReplaceValue,{"EV DC Fast Count"})
+
+
+= Table.ReplaceValue(#"Replaced Value9",null,0,Replacer.ReplaceValue,{"EV Level2 EVSE Num"})
+
+
+= Table.ReplaceValue(#"Replaced Value10",null,0,Replacer.ReplaceValue,{"EV Level1 EVSE Num"})
+
+= Table.ReplaceValue(#"Replaced Value11","","24 hours daily",Replacer.ReplaceValue,{"Access Days Time"})
+
+
+= Table.RemoveRowsWithErrors(#"Replaced Value12", {"ZIP"})
